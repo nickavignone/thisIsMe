@@ -66,7 +66,7 @@
     if(TypeData.length > this.dataSet) {
       this.run();
     } else {
-      this.$terminal.addClass('terminal__textDisplay--running');
+      this.$terminal.find('span').last().addClass('terminal__typing');
     }
   };
 
