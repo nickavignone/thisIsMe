@@ -29,6 +29,8 @@ var TypeData = [
     type : 'type',
     pre  : 'nickavi:Sites nicavign$',
     data : [
+      '',
+      '',
       'cd thisIsMe'
     ]
   },
@@ -185,7 +187,9 @@ var TypeData = [
     type : 'type',
     pre  : 'nickavi:thisIsMe nicavign$',
     data : [
-      'gulp prod',
+      '',
+      '',
+      'gulp prod'
     ]
   },
   {
