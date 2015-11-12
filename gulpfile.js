@@ -12,6 +12,7 @@ var merge        = require('merge-stream');
 var uglify       = require('gulp-uglify');
 var filter       = require('gulp-filter');
 var stylish      = require('jshint-stylish');
+var prefix       = require('gulp-autoprefixer');
 var jshint       = require('gulp-jshint');
 var gutil        = require('gulp-util');
 var concat       = require('gulp-concat');
@@ -83,6 +84,10 @@ gulp.task('sass', function() {
         outputStyle: isProd ? 'compressed' : 'expanded',
         includePaths: [require('node-bourbon').includePaths]
       }).on('error', sass.logError))
+    .pipe(prefix({
+      browsers: ['last 30 versions'],
+      cascade: false
+    }))
     .pipe(gulpif(!isProd, sourcemaps.write()))
     .pipe(gulp.dest(dest))
     .pipe(livereload());
