@@ -10,43 +10,67 @@
     this.dataLine = 0;
   }
 
-  GulpType.prototype.runType = function () {
-    console.log(this);
-    var set   = this.dataSet;
-    var line  = this.dataLine;
-    this.$terminal.append($('<br /><span>' + TypeData[set].data[line] + '</span>'));
-    if(TypeData[set].data.length > line + 2) {
-      this.dataLine++;
-      this.runType();
-    } else {
-      this.nextSet();
+  GulpType.prototype.randomNum = function () {
+    var rando = Math.floor((Math.random() * 30));
+    if(rando < 1) {
+      return Math.floor((Math.random() * 1000));
+    } else if (rando < 2) {
+      return Math.floor((Math.random() * 800));
     }
-    console.log(this);
+    return Math.floor((Math.random() * 100));
+  };
+
+  GulpType.prototype.typeText = function (str, $el) {
+    if(str.length > 0) {
+      $el.append(str[0]);
+      setTimeout(function() {
+        this.typeText(str.slice(1), $el);
+      }.bind(this), 75);
+    } else {
+      $el.removeClass('terminal__typing');
+      if(TypeData[this.dataSet].data.length > this.dataLine + 1) {
+        this.dataLine++;
+        setTimeout(this.runType.bind(this), 500);
+      } else {
+        this.nextSet();
+      }
+    }
+  };
+
+  GulpType.prototype.runType = function () {
+    var $el   = $('<span class="terminal__typing"></span>');
+    this.$terminal.append($('<br />'));
+    this.$terminal.append($el);
+    $el.append(TypeData[this.dataSet].pre + '&nbsp;');
+    //this.$terminal.append($('<br /><span>' + TypeData[set].data[line] + '</span>'));
+    this.typeText(TypeData[this.dataSet].data[this.dataLine], $el);
   };
 
   GulpType.prototype.runLine = function () {
-    console.log(this);
     var set   = this.dataSet;
     var line  = this.dataLine;
+    this.$terminal.addClass('terminal__textDisplay--running');
     this.$terminal.append($('<br /><span>' + TypeData[set].data[line] + '</span>'));
-    if(TypeData[set].data.length > line + 2) {
+    if(TypeData[set].data.length > line + 1) {
       this.dataLine++;
-      this.runLine();
+      setTimeout(this.runLine.bind(this), this.randomNum());
     } else {
+      this.$terminal.removeClass('terminal__textDisplay--running');
       this.nextSet();
     }
-    console.log(this);
   };
 
   GulpType.prototype.nextSet = function () {
     this.dataSet++;
-    if(TypeData.length > this.dataSet + 1) {
+    this.dataLine = 0;
+    if(TypeData.length > this.dataSet) {
       this.run();
+    } else {
+      this.$terminal.addClass('terminal__textDisplay--running');
     }
   };
 
   GulpType.prototype.run = function () {
-    console.log(this);
 
     if(TypeData[this.dataSet].type == 'type') {
       this.runType();

@@ -78,7 +78,6 @@ gulp.task('sass', function() {
   var dest = conf.build + '/assets/css/';
 
   gulp.src(conf.scss)
-    .pipe(cache('scss'))
     .pipe(gulpif(!isProd, sourcemaps.init()))
     .pipe(sass({
         outputStyle: isProd ? 'compressed' : 'expanded',

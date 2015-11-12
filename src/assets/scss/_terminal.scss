@@ -1,5 +1,6 @@
 .terminal {
-  border: 1px solid $white;
+  border: 1px solid $black;
+  height: 60%;
   margin: 50px auto;
   padding: 20px;
   position: relative;
@@ -17,11 +18,36 @@
     left: 0;
     position: absolute;
     width: 100%;
+
+    &--running {
+      padding-bottom: 15px;
+
+      &:before {
+        background: $lightgrey;
+        bottom: 0;
+        content: '';
+        height: 15px;
+        left: 0;
+        position: absolute;
+        width: 7px;
+      }
+    }
+
+    
   }
 
+  &__typing {
+    position: relative;
 
-}
+    &:after {
+      background: $lightgrey;
+      content: '';
+      height: 15px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 7px;
+    }
+  }
 
-html {
-  background: red;
 }
