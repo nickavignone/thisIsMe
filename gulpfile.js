@@ -13,7 +13,6 @@ var uglify       = require('gulp-uglify');
 var filter       = require('gulp-filter');
 var stylish      = require('jshint-stylish');
 var jshint       = require('gulp-jshint');
-var injectReload = require('gulp-inject-reload');
 var gutil        = require('gulp-util');
 var concat       = require('gulp-concat');
 var cache        = require('gulp-cached');
@@ -70,7 +69,6 @@ gulp.task('copy', function() {
   return gulp.src(source, {cwd: conf.src})
         .pipe(cache('fullcopy'))
         .pipe(onlyHtml)
-        .pipe(gulpif(!isProd, injectReload()))
         .pipe(onlyHtml.restore())
         .pipe(gulp.dest(conf.build))
         .pipe(livereload());
@@ -87,7 +85,8 @@ gulp.task('sass', function() {
         includePaths: [require('node-bourbon').includePaths]
       }).on('error', sass.logError))
     .pipe(gulpif(!isProd, sourcemaps.write()))
-    .pipe(gulp.dest(dest));
+    .pipe(gulp.dest(dest))
+    .pipe(livereload());
 });
 
 gulp.task('js', function() {
@@ -118,6 +117,7 @@ gulp.task('build', function(callback) {
 });
 
 gulp.task('watch', function() {
+  livereload.listen();
   gulp.watch(conf.scss, ['scss-lint', 'sass']);
   gulp.watch(conf.js.app, ['js-hint', 'js']);
   gulp.watch('./src/**/*.{html,png,jpeg,jpg}', ['copy']);
