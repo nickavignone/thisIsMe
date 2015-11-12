@@ -1,0 +1,27 @@
+.terminal {
+  border: 1px solid $white;
+  margin: 50px auto;
+  padding: 20px;
+  position: relative;
+  width: 800px;
+  
+  &__outer {
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  }
+
+  &__textDisplay {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+  }
+
+
+}
+
+html {
+  background: red;
+}

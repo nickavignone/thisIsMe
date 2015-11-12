@@ -29,7 +29,7 @@ var conf = {
   },
   'js': {
     'vendor': ['<%= src %>/assets/js/libs/jquery-1.11.1.js','<%= src %>/assets/js/libs/*.js'],
-    'app': '<%= src %>/assets/js/src/*.js'
+    'app': ['<%= src %>/assets/js/src/typeData.js','<%= src %>/assets/js/src/*.js']
   },
   'scss': ['<%= src %>/assets/scss/**/*.scss']
 };
@@ -93,7 +93,6 @@ gulp.task('js', function() {
   var dest = conf.build + '/assets/js/';
 
   var vendor = gulp.src(conf.js.vendor)
-      .pipe(cache('js'))
       .pipe(gulpif(!isProd, sourcemaps.init()))
       .pipe(concat('vendor.js'))
       .pipe(gulpif(isProd, uglify()))
@@ -101,7 +100,6 @@ gulp.task('js', function() {
       .pipe(gulp.dest(dest));
 
   var app = gulp.src(conf.js.app)
-      .pipe(cache('js'))
       .pipe(gulpif(!isProd, sourcemaps.init()))
       .pipe(concat('app.js'))
       .pipe(gulpif(isProd, uglify()))
