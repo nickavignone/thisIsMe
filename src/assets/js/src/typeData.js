@@ -211,5 +211,12 @@ var TypeData = [
       '[15:28:36] Starting \'prod\'...',
       '[15:28:36] Finished \'prod\' after 2.53 &micro;s',
     ]
+  },
+  {
+    type : 'type',
+    pre  : 'nickavi:thisIsMe nicavign$',
+    data : [
+      '',
+    ]
   }
 ];
