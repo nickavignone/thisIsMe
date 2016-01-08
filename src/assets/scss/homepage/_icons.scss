@@ -1,0 +1,46 @@
+.desktop {
+
+  &__icon {
+    color: $white;
+    font-family: 'Helvetica Neue', 'Helvetica';
+    font-size: 13px;
+    position: absolute;
+    width: 102px;
+
+    &.active {
+      .desktop__icon__title {
+        background: #3c77d4;
+        border-radius: 5px;
+        padding: 3px 0;
+      }
+
+      .desktop__icon__img {
+        border: 2px solid #4e4d4e;
+        border-radius: 2px;
+      }
+    }
+
+    &__img {
+      cursor: default;
+      height: 40px;
+      margin: 0 auto 1px;
+      width: 40px;
+    }
+
+    &__title {
+      cursor: default;
+      text-align: center;
+    }
+
+    &--hots {
+      right: 30px;
+      top: 70px;
+
+      &__img {
+        background: url('../../imgs/homepage/hots_icon.png') center center / contain;
+      }
+    }
+  }
+
+
+}

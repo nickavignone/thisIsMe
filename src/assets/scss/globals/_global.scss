@@ -1,14 +1,13 @@
 html {
   box-sizing: border-box;
   font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
-}
-pre{
-
-}
-code {
-
+  margin: 0;
 }
 
-span {
+body {
+  margin: 0;
+}
 
+.notransition {
+  transition: none !important;
 }

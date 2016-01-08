@@ -18,6 +18,8 @@ var gutil        = require('gulp-util');
 var concat       = require('gulp-concat');
 var cache        = require('gulp-cached');
 var runSequence  = require('run-sequence');
+var swig         = require('gulp-swig');
+var data         = require('gulp-data');
 
 var isProd = false;
 
@@ -30,9 +32,14 @@ var conf = {
   },
   'js': {
     'vendor': ['<%= src %>/assets/js/libs/jquery-1.11.1.js','<%= src %>/assets/js/libs/*.js'],
-    'app': ['<%= src %>/assets/js/src/typeData.js','<%= src %>/assets/js/src/*.js']
+    'app': ['<%= src %>/assets/js/src/**/*.js'],
+    'homepage': ['<%= src %>/assets/js/src/homepage/typeData.js', '<%= src %>/assets/js/src/homepage/*.js']
   },
-  'scss': ['<%= src %>/assets/scss/**/*.scss']
+  'scss': ['<%= src %>/assets/scss/**/*.scss'],
+  'swig' : {
+    'templates': '<%= src %>/templates/**/*.html',
+    'data': '<%= src %>/templates/data/data.json'
+  }
 };
 
 conf.file = './gulpfile.js';
@@ -46,6 +53,32 @@ gulp.task('setProd', function() {
 gulp.task('clean', function(cb) {
   del([conf.build], cb);
 });
+
+
+gulp.task('swig', function(){
+ return gulp.src(conf.swig.templates)
+    .pipe(data(function() {
+      return require(conf.swig.data);
+    }))
+    .pipe(swig({
+      defaults: {cache: false }
+    }))
+    //.pipe(rename(newCPName+'.html'))
+    .pipe(gulp.dest(conf.build));
+});
+
+/*gulp.task('swig', function(){
+ return gulp.src('./templates/master-campaign.html')
+      .pipe(data(function() {
+        return require('./data/' + dataPath + '.json');
+      }))
+      .pipe(swig())
+      .pipe(rename(newCPName+'.html'))
+      .pipe(gulp.dest('dist'));
+
+});*/
+
+
 
 gulp.task('scss-lint', function() {
   gulp.src(conf.scss)
@@ -103,26 +136,26 @@ gulp.task('js', function() {
       .pipe(gulpif(!isProd, sourcemaps.write()))
       .pipe(gulp.dest(dest));
 
-  var app = gulp.src(conf.js.app)
+  var homepage = gulp.src(conf.js.homepage)
       .pipe(gulpif(!isProd, sourcemaps.init()))
-      .pipe(concat('app.js'))
+      .pipe(concat('homepage.js'))
       .pipe(gulpif(isProd, uglify()))
       .pipe(gulpif(!isProd, sourcemaps.write()))
       .pipe(gulp.dest(dest));
 
-  return merge(vendor, app).pipe(livereload());
+  return merge(vendor, homepage).pipe(livereload());
 
 });
 
 gulp.task('build', function(callback) {
-  runSequence('clean', ['copy', 'sass', 'js'], callback);
+  runSequence('clean', ['copy', 'sass', 'js', 'swig'], callback);
 });
 
 gulp.task('watch', function() {
   livereload.listen();
   gulp.watch(conf.scss, ['scss-lint', 'sass']);
   gulp.watch(conf.js.app, ['js-hint', 'js']);
-  gulp.watch('./src/**/*.{html,png,jpeg,jpg}', ['copy']);
+  gulp.watch('./src/**/*.{html,png,jpeg,jpg}', ['copy', 'swig']);
 });
 
 gulp.task('default', ['lint', 'build', 'watch']);

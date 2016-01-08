@@ -1,14 +1,13 @@
 /*global jQuery*/
 /*global TypeData*/
 
-(function($, document, TypeData) {
+var GulpType = (function($, document, TypeData) {
   'use strict';
-  function GulpType() {
-    this.className = 'ff';
+  var GulpType = function() {
     this.$terminal = $('.terminal__textDisplay');
     this.dataSet = 0;
     this.dataLine = 0;
-  }
+  };
 
   GulpType.prototype.randomNum = function () {
     var rando = Math.floor((Math.random() * 30));
@@ -70,7 +69,15 @@
     }
   };
 
+  GulpType.prototype.setSize = function () {
+    var terminal = $('.terminal');
+    terminal.css('width', terminal.width() + 'px');
+    terminal.css('height', terminal.height() + 'px');
+  };
+
   GulpType.prototype.run = function () {
+
+    this.setSize();
 
     if(TypeData[this.dataSet].type == 'type') {
       this.runType();
@@ -88,9 +95,11 @@
     this.run();
 
   };
-
-  $(document).ready(function() {
-    var gType = new GulpType();
-    gType.init();
-  });
+  return GulpType;
 }(jQuery, document, TypeData));
+
+$(document).ready(function() {
+  'use strict';
+  var gType = new GulpType();
+  gType.init();
+});

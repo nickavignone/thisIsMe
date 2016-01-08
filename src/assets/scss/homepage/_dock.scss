@@ -1,0 +1,72 @@
+.dock {
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  z-index: 1;
+
+  ul {
+    background: url('../../imgs/homepage/board_middle.png') 50% 100% repeat-x;
+    display: inline-block;
+    list-style-type: none;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    text-align: left;
+    transition: width 0.5s linear;
+
+    &:before {
+      background: url('../../imgs/homepage/board_left.png') 50% 100% no-repeat;
+      bottom: 0; 
+      content: '';
+      left: -29px;
+      position: absolute;
+      top: 0;
+      width: 29px;
+    }
+
+    &:after {
+      
+      background: url('../../imgs/homepage//board_right.png') 50% 100% no-repeat;
+      bottom: 0;
+      content: '';
+      position: absolute;
+      right: -29px;
+      top: 0;
+      width: 29px;
+    }
+
+    li {
+      //background: rgba(0,0,0,0.1);
+      display: inline-block;
+      line-height: 1px;
+      height: 65px;
+      margin: 0 10px;
+      overflow: hidden;
+      padding-bottom: 25px;
+      position: relative;
+      width: 65px;
+
+      .myclass {
+        background: blue;
+        border-radius: 50%;
+        height: 65px;
+        width: 65px;
+      }
+
+      &:before {
+        background: url('../../imgs/homepage/shadow.png') 50% 50% no-repeat;
+        bottom: 10px;
+        content: '';
+        height: 12px;
+        left: 0;
+        position: absolute;
+        right: 0;
+        width: 68px;
+        z-index: 1;
+      }
+    }
+  }
+}

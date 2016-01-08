@@ -1,74 +1,8 @@
-.terminal {
-  border-radius: 5px;
-  box-shadow: 0 0 20px rgba(0,0,0,.75);
-  height: 60%;
-  left: 50%;
-  overflow: hidden; 
-  padding: 7px;
-  position: relative;
-  top: 50px;
-  transform: translateX(-50%);
-  width: 60%;
-  max-width: 700px;
-
-  &__animator {
-    height: 100%;
-    left: 0;
-    padding: 20px;
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }
-
-  &__outer {
-    height: 100%;
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-  }
-
-  &__textDisplay {
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    width: 100%;
-
-    &--running {
-      padding-bottom: 15px;
-
-      &:before {
-        background: $lightgrey;
-        bottom: 0;
-        content: '';
-        height: 15px;
-        left: 0;
-        position: absolute;
-        width: 7px;
-      }
-    }
-  }
-
-  &__typing {
-    position: relative;
-
-    &:after {
-      background: $lightgrey;
-      content: '';
-      height: 15px;
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 7px;
-    }
-  }
-}
-
-
 //Toolbar
 
 .toolbar {
   background: $black;
-  background: linear-gradient(top,  #cfcfcf 0%,#a8a8a8 100%);
+  background: linear-gradient(to bottom,  #f6f6f6 0%,#d3d3d3 100%);
   border-radius: 5px 5px 0 0;
   box-shadow: 0 1px 0 rgba(255,255,255,.5) inset,0 1px 0 #515151;
   height: 25px;
@@ -111,17 +45,17 @@
 
     &--red {
       background: #f41b16;
-      background: linear-gradient(top,  #f41b16 0%,#fc7471 100%); 
+      background: linear-gradient(to bottom,  #f41b16 0%,#fc7471 100%); 
 
       &:active {
         background: #972f2e; /* Old browsers */
-        background: linear-gradient(top,  #972f2e 0%,#fc7471 100%); /* W3C */ 
+        background: linear-gradient(to bottom,  #972f2e 0%,#fc7471 100%); /* W3C */ 
       }
 
       .glyph {
         position: relative;
         top: 0px;
-        left: 3px;
+        left: 4px;
         font-size: 14px;
         font-weight: bold;
         color: #9b3a36;
@@ -132,12 +66,12 @@
 
     &--yellow {
       background: #f4a316; /* Old browsers */
-      background: linear-gradient(left,  #f4a316 0%,#fcc371 100%); /* W3C */  
+      background: linear-gradient(to right,  #f4a316 0%,#fcc371 100%); /* W3C */  
       margin:0px 7px; 
 
       &:active {
         background: #ae4f1e; /* Old browsers */
-        background: linear-gradient(top,  #ae4f1e 0%,#fcc371 100%); /* W3C */   
+        background: linear-gradient(to bottom,  #ae4f1e 0%,#fcc371 100%); /* W3C */   
       }
 
       .glyph {
@@ -154,11 +88,11 @@
 
     &--green {
       background: #4cae2e; /* Old browsers */
-      background: linear-gradient(top,  #4cae2e 0%,#dafc71 100%); /* W3C */
+      background: linear-gradient(to bottom,  #4cae2e 0%,#dafc71 100%); /* W3C */
 
       &:active {
         background: #48752b; /* Old browsers */
-        background: linear-gradient(top,  #48752b 0%,#dafc71 100%); /* W3C */  
+        background: linear-gradient(to bottom,  #48752b 0%,#dafc71 100%); /* W3C */  
       }
 
       .glyph {
@@ -218,7 +152,7 @@
     border:1px solid #6e8ba1;
     
     background: #b8cfe0; /* Old browsers */
-    background: linear-gradient(top,  #b8cfe0 0%,#86adc8 100%); /* W3C */    
+    background: linear-gradient(to bottom,  #b8cfe0 0%,#86adc8 100%); /* W3C */    
     
     z-index: -50;
     box-shadow:0px 1px 0px rgba(255,255,255,0.25) inset,0px 1px 0px rgba(0,0,0,0.2);

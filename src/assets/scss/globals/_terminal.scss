@@ -1,0 +1,66 @@
+.terminal {
+  background: $white;
+  border-radius: 5px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, .75);
+  height: 60%;
+  left: 50%;
+  overflow: hidden; 
+  padding: 7px;
+  position: relative;
+  transform: translateX(-50%) translateY(50px);
+  width: 60%;
+  
+
+  &__animator {
+    height: 100%;
+    left: 0;
+    padding: 20px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
+  &__outer {
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  }
+
+  &__textDisplay {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+
+    &--running {
+      padding-bottom: 15px;
+
+      &:before {
+        background: $lightgrey;
+        bottom: 0;
+        content: '';
+        height: 15px;
+        left: 0;
+        position: absolute;
+        width: 7px;
+      }
+    }
+  }
+
+  &__typing {
+    position: relative;
+
+    &:after {
+      background: $lightgrey;
+      content: '';
+      height: 15px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 7px;
+    }
+  }
+}
+
+

@@ -1,0 +1,14 @@
+{
+  "homepage": {
+    "icons": [
+      {
+        "title":  "Heroes of the Storm",
+        "symbol":    "hots"
+      },
+      {
+        "title":  "Another icon",
+        "symbol":    "hots"
+      }
+    ]
+  }
+}
