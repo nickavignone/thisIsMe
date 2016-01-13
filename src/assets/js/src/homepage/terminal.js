@@ -98,8 +98,3 @@ var GulpType = (function($, document, TypeData) {
   return GulpType;
 }(jQuery, document, TypeData));
 
-$(document).ready(function() {
-  'use strict';
-  var gType = new GulpType();
-  gType.init();
-});
