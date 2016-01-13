@@ -19,15 +19,14 @@ $(this).closest('.a');
 
     console.log(options.AppObject);
 
-
     function setListeners() {
-      $appWindow.on('click', function () {
-        if($appWindow.hasClass('minimized')) {
+      $appWindow.on('click', function() {
+        if ($appWindow.hasClass('minimized')) {
           maximize();
         }
       });
 
-      $appWindow.find('.toolbar__light--yellow').on('click', function () {
+      $appWindow.find('.toolbar__light--yellow').on('click', function() {
         minimize();
       });
     }
@@ -39,15 +38,14 @@ $(this).closest('.a');
       var partialW  = ($appWindow.outerWidth() / 100);
       var partialH  = ($appWindow.outerHeight() / 100);
 
-      var targetLeft = ((targetX + 45) - ($( window ).width() /2 )) / partialW;
+      var targetLeft = ((targetX + 45) - ($(window).width() / 2)) / partialW;
       targetLeft = ((targetX + 45)) / partialW;
       var targetTop = targetY / partialH;
       var top = (65 - ($appWindow.height() * scale)) / 2;
 
       options.AppObject.draggy.disable();
 
-
-      $appWindow.css({'transition':'transform .5s ease-in', '-webkit-transition':'-webkit-transform .5s ease-in', 'transform':'translateX(' + targetLeft + '%) translateY(' + (targetTop + (top / partialH)) + '%) scale('+ scale +')'});
+      $appWindow.css({'transition': 'transform .5s ease-in', '-webkit-transition': '-webkit-transform .5s ease-in', 'transform': 'translateX(' + targetLeft + '%) translateY(' + (targetTop + (top / partialH)) + '%) scale(' + scale + ')'});
 
       minimized.left = targetLeft;
       minimized.scale = scale;
@@ -56,11 +54,11 @@ $(this).closest('.a');
       maximized.top = $appWindow.offset().top;
       maximized.left = $appWindow.offset().left;
 
-      $dock.css('width', ($dock.width() + 95) + 'px');
-      setTimeout(function () {
+      $dock.css('width', ($dock.width() + 93) + 'px');
+      setTimeout(function() {
         $dock.append($('<li></li>').append($appWindow));
         //$appWindow.css({'transition':'none', 'transform' : 'scale('+ scale +')', 'left':'0', 'position':'absolute','top': top + 'px'});
-        $appWindow.css({'transform' : 'scale('+ scale +')', 'position':'absolute','top': top + 'px'});
+        $appWindow.css({'transform': 'scale(' + scale + ')', 'position': 'absolute','top': top + 'px'});
         $appWindow.addClass('minimized');
       }, 500);
     }
@@ -72,22 +70,21 @@ $(this).closest('.a');
       options.AppObject.draggy.enable();
 
       //$appWindow.css({'transition':'none', 'top':'0', 'left':'50%', 'transform':'translateX(' + minimized.left + '%) translateY(' + minimized.top + '%) scale('+ minimized.scale +')'});
-      $appWindow.css({'transition':'none', 'top':'0', 'transform':'translateX(' + minimized.left + '%) translateY(' + minimized.top + '%) scale('+ minimized.scale +')'});
+      $appWindow.css({'transition': 'none', 'top': '0', 'transform': 'translateX(' + minimized.left + '%) translateY(' + minimized.top + '%) scale(' + minimized.scale + ')'});
 
-
-      setTimeout(function () {
-        $appWindow.css({'transition':'transform .5s ease-in', '-webkit-transition':'-webkit-transform .5s ease-in'});
+      setTimeout(function() {
+        $appWindow.css({'transition': 'transform .5s ease-in', '-webkit-transition': '-webkit-transform .5s ease-in'});
       }, 0);
 
-      setTimeout(function () {
-        $dock.css('width', ($dock.width() - 95) + 'px');
+      setTimeout(function() {
+        $dock.css('width', ($dock.width() - 93) + 'px');
         $appWindow.removeClass('minimized');
         //$appWindow.css({'transform':'scale(1) translateX(' + maximized.left + 'px) translateY(' + maximized.top + 'px)', 'left' : '50%'});
-        $appWindow.css({'transform':'scale(1) translateX(' + maximized.left + 'px) translateY(' + maximized.top + 'px)'});
+        $appWindow.css({'transform': 'scale(1) translateX(' + maximized.left + 'px) translateY(' + maximized.top + 'px)'});
       }, 0);
 
-      setTimeout(function () {
-        $appWindow.css({'transition':'none'});
+      setTimeout(function() {
+        $appWindow.css({'transition': 'none'});
       }, 500);
     }
 

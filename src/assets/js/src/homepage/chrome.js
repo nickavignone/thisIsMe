@@ -4,17 +4,18 @@
   'use strict';
 
   var Chrome = function() {
-    this.init();
+    this.$el = null;
   };
 
   Chrome.prototype.generateHTML = function() {
-    console.log(new Toolbar());
+    this.$el = $('<div class="application">' + Toolbar.generateHTML() + '</div>');
+    $('#homepage').append(this.$el);
   };
 
   Chrome.prototype.init = function() {
     this.generateHTML();
   };
 
-  return Chrome;
+  window.Chrome = Chrome;
 
 }());
