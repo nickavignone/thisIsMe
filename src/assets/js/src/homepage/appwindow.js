@@ -1,4 +1,4 @@
-$(this).closest('.a');
+//$(this).closest('.a');
 
 /*global jQuery*/
 
@@ -7,18 +7,23 @@ var AppWindows = (function($) {
 
   var AppWindow = function(el) {
     this.$el = el;
-    this.$minimize = el.find('.toolbar__light--yellow');
     this.init();
   };
 
   AppWindow.prototype.setListeners = function() {
     var _this = this;
-    this.$minimize.on('click', function () {
-      _this.$el.genie();
+    this.$el.genie({
+      'AppObject' : this
     });
+    this.draggy = new Draggy(this.$el[0]);
+  };
+
+  AppWindow.prototype.setSizeLocation = function() {
+    this.$el.css({'width':this.$el.width() + 'px', 'height':this.$el.height() + 'px', 'transform':'translate(' + (($(document).width() - this.$el.width()) / 2) + 'px, 60px)'});
   };
 
   AppWindow.prototype.init = function() {
+    this.setSizeLocation();
     this.setListeners();
     var $dock = $('#dock ul');
     $dock.addClass('notransition');
@@ -48,10 +53,7 @@ var AppWindows = (function($) {
   AppWindows.prototype.init = function() {
     this.setWindows();
     this.setListeners();
-
   };
-
-  
 
   return AppWindows;
 
@@ -60,6 +62,6 @@ var AppWindows = (function($) {
 
 $(document).ready(function() {
   'use strict';
-  var genie = new AppWindows();
-  genie.init();
+  var appWindows = new AppWindows();
+  appWindows.init();
 });

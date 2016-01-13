@@ -6,14 +6,31 @@ $(this).closest('.a');
   'use strict';
   $.fn.genie = function(options) {
     options = $.extend({
-      'example': 1500,
-      'minSize': 65,
-      'action' : 'minimize' 
+      'example'   : 1500,
+      'minSize'   : 65,
+      'action'    : 'minimize',
+      'AppObject' : null
     }, options);
 
     var $appWindow = this;
     var $dock = $('#dock ul');
+    var minimized = {};
+    var maximized = {};
 
+    console.log(options.AppObject);
+
+
+    function setListeners() {
+      $appWindow.on('click', function () {
+        if($appWindow.hasClass('minimized')) {
+          maximize();
+        }
+      });
+
+      $appWindow.find('.toolbar__light--yellow').on('click', function () {
+        minimize();
+      });
+    }
 
     function minimize() {
       var scale     = options.minSize / $appWindow.width();
@@ -21,33 +38,57 @@ $(this).closest('.a');
       var targetY   = $('#dock li').last().offset().top;
       var partialW  = ($appWindow.outerWidth() / 100);
       var partialH  = ($appWindow.outerHeight() / 100);
+
       var targetLeft = ((targetX + 45) - ($( window ).width() /2 )) / partialW;
+      targetLeft = ((targetX + 45)) / partialW;
       var targetTop = targetY / partialH;
       var top = (65 - ($appWindow.height() * scale)) / 2;
 
+      options.AppObject.draggy.disable();
 
-      console.log(targetX + ' x');
-      console.log($('#dock ul li:nth-child(1)').offset().left + ' 11');
-      console.log($('#dock ul li:nth-child(2)').offset().left + ' 22');
-      console.log($('#dock ul li:nth-child(3)').offset().left + ' 33');
-      console.log($('#dock ul li:nth-child(4)').offset().left + ' 44');
-      console.log($('#dock ul li:nth-child(5)').offset().left + ' 55');
 
-      $appWindow.css('transform', 'translateX(' + targetLeft + '%) translateY(' + (targetTop + (top / partialH)) + '%) scale('+ scale +')');
-      console.log($dock);
-      console.log($dock.width());
+      $appWindow.css({'transition':'transform .5s ease-in', '-webkit-transition':'-webkit-transform .5s ease-in', 'transform':'translateX(' + targetLeft + '%) translateY(' + (targetTop + (top / partialH)) + '%) scale('+ scale +')'});
+
+      minimized.left = targetLeft;
+      minimized.scale = scale;
+      minimized.top = (targetTop + (top / partialH));
+
+      maximized.top = $appWindow.offset().top;
+      maximized.left = $appWindow.offset().left;
+
       $dock.css('width', ($dock.width() + 95) + 'px');
-      console.log($dock.width());
       setTimeout(function () {
-        //$dock.append($('<li></li>').append($appWindow));
+        $dock.append($('<li></li>').append($appWindow));
         //$appWindow.css({'transition':'none', 'transform' : 'scale('+ scale +')', 'left':'0', 'position':'absolute','top': top + 'px'});
-        //$appWindow.addClass('minimized');
-        console.log($appWindow.height());
+        $appWindow.css({'transform' : 'scale('+ scale +')', 'position':'absolute','top': top + 'px'});
+        $appWindow.addClass('minimized');
       }, 500);
     }
 
     function maximize() {
+      $('#homepage').append($appWindow);
+      $('#dock').find('li').last().remove();
 
+      options.AppObject.draggy.enable();
+
+      //$appWindow.css({'transition':'none', 'top':'0', 'left':'50%', 'transform':'translateX(' + minimized.left + '%) translateY(' + minimized.top + '%) scale('+ minimized.scale +')'});
+      $appWindow.css({'transition':'none', 'top':'0', 'transform':'translateX(' + minimized.left + '%) translateY(' + minimized.top + '%) scale('+ minimized.scale +')'});
+
+
+      setTimeout(function () {
+        $appWindow.css({'transition':'transform .5s ease-in', '-webkit-transition':'-webkit-transform .5s ease-in'});
+      }, 0);
+
+      setTimeout(function () {
+        $dock.css('width', ($dock.width() - 95) + 'px');
+        $appWindow.removeClass('minimized');
+        //$appWindow.css({'transform':'scale(1) translateX(' + maximized.left + 'px) translateY(' + maximized.top + 'px)', 'left' : '50%'});
+        $appWindow.css({'transform':'scale(1) translateX(' + maximized.left + 'px) translateY(' + maximized.top + 'px)'});
+      }, 0);
+
+      setTimeout(function () {
+        $appWindow.css({'transition':'none'});
+      }, 500);
     }
 
     function expand() {
@@ -55,19 +96,12 @@ $(this).closest('.a');
     }
 
     function init() {
-      if(options.action == 'minimize') {
-        minimize();
-      } else if(options.action == 'maximize'){
-        maximize();
-      } else {
-        expand();
-      }
+      setListeners();
     }
-
     init();
   };
 })(jQuery);
-
+/*
 var Genie = (function($) {
   'use strict';
   var Genie = function() {
@@ -96,4 +130,4 @@ $(document).ready(function() {
   'use strict';
   var genie = new Genie();
   genie.init();
-});
+});*/
