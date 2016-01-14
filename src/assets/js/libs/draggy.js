@@ -88,8 +88,9 @@
   onDrag.initEvent('onDrag', true, true);
   onDrop.initEvent('onDrop', true, true);
 
-  window.Draggy = function(attachTo, config) {
+  window.Draggy = function(attachTo, scrubber, config) {
     this.attachTo = attachTo;
+    this.scrubber = scrubber;
     this.config   = config || {};
     this.onChange = this.config.onChange || function() {};
     this.position = [0,0];
@@ -139,29 +140,29 @@
     },
     // Disable the draggy object so that it can't be moved
     disable: function() {
-      this.ele.removeEventListener(events.start, this.dragStart);
+      this.scrubber.removeEventListener(events.start, this.dragStart.bind(this));
     },
     // Enable the draggy object so that it can be moved
     enable: function() {
-      this.ele.addEventListener(events.start, this.dragStart);
+      this.scrubber.addEventListener(events.start, this.dragStart.bind(this));
     },
     // Get current state and prepare for moving object
     dragStart: function(e) {
-      var restrictX = this.restrictX,
-          restrictY = this.restrictY,
-          limitsX = this.limitsX,
-          limitsY = this.limitsY,
-          relativeX = this.position[0],
-          relativeY = this.position[1],
+      var restrictX = this.ele.restrictX,
+          restrictY = this.ele.restrictY,
+          limitsX = this.ele.limitsX,
+          limitsY = this.ele.limitsY,
+          relativeX = this.ele.position[0],
+          relativeY = this.ele.position[1],
           posX = isTouch ? e.touches[0].pageX : e.clientX,
           posY = isTouch ? e.touches[0].pageY : e.clientY,
           newX, newY,
-          self = this; // The DOM element
+          self = this.ele; // The DOM element
 
       // Allow nested draggable elements
       e.stopPropagation();
 
-      util.addClass(this, 'activeDrag');
+      util.addClass(this.ele, 'activeDrag');
 
       d.addEventListener(events.move, dragMove);
       d.addEventListener(events.end, dragEnd);

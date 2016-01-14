@@ -15,14 +15,19 @@
 
     AppWindow.prototype.setListeners = function() {
       var _this = this;
-      this.$el.genie({
+      this.$el.toolbarLights({
         'AppObject': this
       });
-      this.draggy = new Draggy(this.$el[0]);
+      this.draggy = new Draggy(this.$el[0], this.$el.find('.toolbar')[0]);
+      this.$el.on('mousedown', function(e) {
+        if ($(e.target).closest('.toolbar__light').length < 1 && !$(this).hasClass('minimized')) {
+          $('#homepage').append(_this.$el);
+        }
+      });
     };
 
     AppWindow.prototype.setSizeLocation = function() {
-      this.$el.css({'width': this.$el.width() + 'px', 'height': this.$el.height() + 'px', 'transform': 'translate(' + (($(document).width() - this.$el.width()) / 2) + 'px, 60px)'});
+      this.$el.css({'width': this.$el.width() + 'px', 'height': this.$el.height() + 'px', 'transform': 'translateX(' + (($(document).width() - this.$el.width()) / 2) + 'px) translateY(60px)'});
     };
 
     AppWindow.prototype.setApplication = function() {
@@ -30,6 +35,8 @@
         this.app = new Chrome();
         this.app.init();
         this.$el = this.app.$el;
+        var height = this.$el.height() - this.$el.find('.toolbar').height() - this.$el.find('.urlbar').height();
+        this.$el.find('.chromewindow__iframe').height(height + 'px');
       }
     };
 
@@ -37,8 +44,11 @@
       if (this.$el === null) {
         this.setApplication();
       }
+      this.$el.addClass('notransition');
       this.setSizeLocation();
-      this.setListeners();
+      setTimeout(function() {
+        this.setListeners();
+      }.bind(this), 0);
     };
 
     var AppWindows = function() {

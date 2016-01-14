@@ -130,10 +130,10 @@
   }
 
   &__title {
-    float: left; 
-    position: relative;
+    position: absolute;
     top:4px;
     width:40%;
+    text-align: center;
     left: 30%;
     font-family: "Myriad Pro", sans-serif; 
     font-size: 14px; 
@@ -142,7 +142,7 @@
   }
 
   &__folder {
-    float: left;
+    display: inline-block;
     margin-right:5px;
   }
 

@@ -4,7 +4,7 @@ $(this).closest('.a');
 
 (function($) {
   'use strict';
-  $.fn.genie = function(options) {
+  $.fn.toolbarLights = function(options) {
     options = $.extend({
       'example'   : 1500,
       'minSize'   : 65,
@@ -17,15 +17,12 @@ $(this).closest('.a');
     var minimized = {};
     var maximized = {};
 
-    console.log(options.AppObject);
-
     function setListeners() {
       $appWindow.on('click', function() {
         if ($appWindow.hasClass('minimized')) {
           maximize();
         }
       });
-
       $appWindow.find('.toolbar__light--yellow').on('click', function() {
         minimize();
       });
@@ -45,7 +42,8 @@ $(this).closest('.a');
 
       options.AppObject.draggy.disable();
 
-      $appWindow.css({'transition': 'transform .5s ease-in', '-webkit-transition': '-webkit-transform .5s ease-in', 'transform': 'translateX(' + targetLeft + '%) translateY(' + (targetTop + (top / partialH)) + '%) scale(' + scale + ')'});
+      $appWindow.removeClass('notransition');
+      $appWindow.css({'transform': 'translateX(' + targetLeft + '%) translateY(' + (targetTop + (top / partialH)) + '%) scale(' + scale + ')'});
 
       minimized.left = targetLeft;
       minimized.scale = scale;
@@ -70,10 +68,11 @@ $(this).closest('.a');
       options.AppObject.draggy.enable();
 
       //$appWindow.css({'transition':'none', 'top':'0', 'left':'50%', 'transform':'translateX(' + minimized.left + '%) translateY(' + minimized.top + '%) scale('+ minimized.scale +')'});
-      $appWindow.css({'transition': 'none', 'top': '0', 'transform': 'translateX(' + minimized.left + '%) translateY(' + minimized.top + '%) scale(' + minimized.scale + ')'});
+      $appWindow.addClass('notransition');
+      $appWindow.css({'top': '0', 'transform': 'translateX(' + minimized.left + '%) translateY(' + minimized.top + '%) scale(' + minimized.scale + ')'});
 
       setTimeout(function() {
-        $appWindow.css({'transition': 'transform .5s ease-in', '-webkit-transition': '-webkit-transform .5s ease-in'});
+        $appWindow.removeClass('notransition');
       }, 0);
 
       setTimeout(function() {
@@ -84,7 +83,7 @@ $(this).closest('.a');
       }, 0);
 
       setTimeout(function() {
-        $appWindow.css({'transition': 'none'});
+        $appWindow.addClass('notransition');
       }, 500);
     }
 
