@@ -7,10 +7,12 @@
   'use strict';
   var AppWindows = (function($) {
 
-    var AppWindow = function(el, type) {
+    var AppWindow = function(el, type, position) {
       this.type = type || '';
       this.$el = el || null;
       this.init();
+      this.position = position;
+      console.log(this.position);
     };
 
     AppWindow.prototype.setListeners = function() {
@@ -19,15 +21,22 @@
         'AppObject': this
       });
       this.draggy = new Draggy(this.$el[0], this.$el.find('.toolbar')[0]);
-      this.$el.on('mousedown', function(e) {
-        if ($(e.target).closest('.toolbar__light').length < 1 && !$(this).hasClass('minimized')) {
-          $('#homepage').append(_this.$el);
+      this.$el.on('mousedown', function() {
+        if (!this.$el.hasClass('minimized')) {
+          console.log(this);
+          this.shufflePositions();
         }
+      }.bind(this));
+      this.$el.resizeMe({
+        'el': this.$el
       });
+
     };
 
     AppWindow.prototype.setSizeLocation = function() {
-      this.$el.css({'width': this.$el.width() + 'px', 'height': this.$el.height() + 'px', 'transform': 'translateX(' + (($(document).width() - this.$el.width()) / 2) + 'px) translateY(60px)'});
+      console.log(this);
+      console.log(this.position);
+      this.$el.css({'width': this.$el.width() + 'px', 'height': this.$el.height() + 'px', 'transform': 'translateX(' + (($(document).width() - this.$el.width()) / 2) + 'px) translateY(60px)', 'zIndex': this.position});
     };
 
     AppWindow.prototype.setApplication = function() {
@@ -55,17 +64,20 @@
       this.$terminal = $('.terminal__textDisplay');
       this.AppWindows = [];
       this.dataLine = 0;
+      this.numWindows = 0;
     };
 
     AppWindows.prototype.setWindows = function() {
       var _this = this;
       $('.application').each(function() {
-        _this.AppWindows.push(new AppWindow($(this)));
+        _this.numWindows++;
+        _this.AppWindows.push(new AppWindow($(this), null, _this.numWindows));
       });
     };
 
     AppWindows.prototype.addWindow = function(type) {
-      this.AppWindows.push(new AppWindow(null, type));
+      this.numWindows++;
+      this.AppWindows.push(new AppWindow(null, type, this.numWindows));
     };
 
     AppWindows.prototype.setListeners = function() {

@@ -26,12 +26,21 @@
     });
   };
 
+  Chrome.prototype.generateResizeable = function() {
+    return '<div class="resizeable">' +
+              '<div class="resizeable__arm resizeable__arm--top" data-resizefrom="t" data-resizeable="ns"></div>' +
+              '<div class="resizeable__arm resizeable__arm--right" data-resizefrom="r" data-resizeable="ew"></div>' +
+              '<div class="resizeable__arm resizeable__arm--bottom" data-resizefrom="b" data-resizeable="ns"></div>' +
+              '<div class="resizeable__arm resizeable__arm--left" data-resizefrom="l" data-resizeable="ew"></div>' +
+            '</div>';
+  };
+
   Chrome.prototype.generateIframe = function() {
     return '<iframe class="chromewindow__iframe" src=""></iframe>';
   };
 
   Chrome.prototype.generateHTML = function() {
-    this.$el = $('<div class="application chromewindow">' + Toolbar.generateHTML() + this.generateURLbar() + this.generateIframe() + '</div>');
+    this.$el = $('<div class="application chromewindow">' + Toolbar.generateHTML() + this.generateURLbar() + this.generateIframe() + this.generateResizeable() + '</div>');
     $('#homepage').append(this.$el);
   };
 

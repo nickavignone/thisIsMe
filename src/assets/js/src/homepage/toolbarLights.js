@@ -1,5 +1,3 @@
-$(this).closest('.a');
-
 /*global jQuery*/
 
 (function($) {

@@ -10,3 +10,43 @@
   transition: transform .5s ease-in;
   width: 60%;
 }
+
+.resizeable {
+  
+  &__arm {
+    position: absolute;
+    z-index: 3;
+
+    &--top {
+      cursor: ns-resize;
+      height: 4px;
+      left: 0;
+      top: 0;
+      width: 100%;
+    }
+
+    &--right {
+      cursor: ew-resize;
+      height: 100%;
+      right: 0;
+      top: 0;
+      width: 4px;
+    }
+
+    &--bottom {
+      bottom: 0;
+      cursor: ns-resize;
+      height: 4px;
+      left: 0;
+      width: 100%;
+    }
+
+    &--left {
+      cursor: ew-resize;
+      height: 100%;
+      left: 0;
+      top: 0;
+      width: 4px;
+    }
+  }
+}
