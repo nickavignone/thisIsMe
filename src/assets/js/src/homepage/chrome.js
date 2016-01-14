@@ -13,8 +13,21 @@
             '</div>';
   };
 
+  Chrome.prototype.setListeners = function() {
+    var _this = this;
+    this.$el.find('.urlbar__input').keypress(function(e) {
+      if (e.which == 13) {
+        if (this.value.indexOf('http://') > -1 || this.value.indexOf('https://') > -1) {
+          _this.$el.find('.chromewindow__iframe').attr('src', this.value);
+        } else {
+          _this.$el.find('.chromewindow__iframe').attr('src', 'http://' + this.value);
+        }
+      }
+    });
+  };
+
   Chrome.prototype.generateIframe = function() {
-    return '<iframe class="chromewindow__iframe" src="http://espn.com"></iframe>';
+    return '<iframe class="chromewindow__iframe" src=""></iframe>';
   };
 
   Chrome.prototype.generateHTML = function() {
@@ -24,6 +37,7 @@
 
   Chrome.prototype.init = function() {
     this.generateHTML();
+    this.setListeners();
   };
 
   window.Chrome = Chrome;
